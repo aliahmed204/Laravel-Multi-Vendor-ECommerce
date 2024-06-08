@@ -29,7 +29,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up'
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+           'guest'=> \App\Http\Middleware\RedirectIfAuthenticated::class,
+           'auth' => \App\Http\Middleware\Authenticate::class,
+           'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
