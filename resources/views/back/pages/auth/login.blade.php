@@ -10,14 +10,8 @@
         <form action="{{route('admin.authenticate')}}" method="post" >
             @csrf
 
-            @if(Session::get('fail'))
-                <div class="alert alert-danger">
-                    {{ Session::get('fail') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+            <x-session.flash name="fail" type="danger" />
+            <x-session.flash name="success" type="success" />
 
             {{-- email, username, phone --}}
             <div class="input-group custom">
@@ -52,7 +46,7 @@
             </div>
             <x-forms.error name="password" />
 
-            {{-- Remember --}}
+            {{-- Remember-Me Forgot-Password --}}
             <div class="row pb-30">
                 <div class="col-6">
                     <div class="custom-control custom-checkbox">
@@ -60,15 +54,14 @@
                             type="checkbox"
                             class="custom-control-input"
                             id="customCheck1"
+                            name="remember"
                         />
-                        <label class="custom-control-label" for="customCheck1"
-                        >Remember</label
-                        >
+                        <label class="custom-control-label" for="customCheck1">Remember</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="forgot-password">
-                        <a href="forgot-password.html">Forgot Password</a>
+                        <a href="{{route('admin.forget-password')}}">Forgot Password</a>
                     </div>
                 </div>
             </div>

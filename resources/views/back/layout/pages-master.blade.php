@@ -759,7 +759,15 @@
 <script src="{{asset('back/vendors/scripts/script.min.js')}}"></script>
 <script src="{{asset('back/vendors/scripts/process.js')}}"></script>
 <script src="{{asset('back/vendors/scripts/layout-settings.js')}}"></script>
-
+<script>
+    // prevent back history from firefox
+    if( navigator.userAgent.indexOf("Firefox") !== -1 ){
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function(){
+            history.pushState(null, null, document.URL);
+        });
+    }
+</script>
     @stack('scripts')
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
-    <title>@yield('pageTitle')</title>
+    <title>@yield('pageTitle', 'Home')</title>
 
     <!-- Site favicon -->
     <link
@@ -44,25 +44,6 @@
     />
     <link rel="stylesheet" type="text/css" href="{{asset('back')}}/vendors/styles/style.css" />
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-GBZ3SGGX85"
-    ></script>
-    <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2973766580778258"
-        crossorigin="anonymous"
-    ></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-
-        gtag("config", "G-GBZ3SGGX85");
-    </script>
    @stack('styleSheets')
 </head>
 <body class="login-page">
@@ -77,7 +58,9 @@
         </div>
         <div class="login-menu">
             <ul>
-                <li><a href="register.html">Register</a></li>
+                @if(! Route::is('admin.*'))
+                    <li><a href="register.html">Register</a></li>
+                @endif
             </ul>
         </div>
     </div>
@@ -102,7 +85,15 @@
 <script src="{{asset('back')}}/vendors/scripts/script.min.js"></script>
 <script src="{{asset('back')}}/vendors/scripts/process.js"></script>
 <script src="{{asset('back')}}/vendors/scripts/layout-settings.js"></script>
-
+<script>
+    // prevent back history from firefox
+    if( navigator.userAgent.indexOf("Firefox") !== -1 ){
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function(){
+            history.pushState(null, null, document.URL);
+        });
+    }
+</script>
     @stack('scripts')
 
 </body>

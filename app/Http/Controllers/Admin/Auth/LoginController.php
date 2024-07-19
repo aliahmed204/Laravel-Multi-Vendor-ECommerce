@@ -10,7 +10,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $filedType = is_numeric($request->login_id)
-            ? 'numeric'
+            ? 'phone'
             : (filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username');
 
 
@@ -18,7 +18,7 @@ class LoginController extends Controller
                 'login_id' => [
                     'required',
                     $filedType == 'email' ? 'email' : '',
-                    'exists:admins,' . ($filedType == 'email' ? 'email' : ($filedType == 'numeric' ? 'phone' : 'username'))
+                    'exists:admins,' . ($filedType == 'email' ? 'email' : ($filedType == 'phone' ? 'phone' : 'username'))
                 ],
                 'password' => ['required', 'min:6', 'max:45'],
             ],
@@ -37,9 +37,7 @@ class LoginController extends Controller
         if (auth()->guard('admin')->attempt($credentials)) {
             return redirect()->route('admin.home');
         }
-
-        return back()->withErrors([
-            'fail' => 'The provided credentials do not match our records.',
-        ]);
+        session()->flash('fail','The provided credentials do not match our records.');
+        return redirect()->back();
     }
 }
