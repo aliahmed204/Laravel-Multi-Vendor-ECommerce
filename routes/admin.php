@@ -15,6 +15,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::view('/login', 'back.pages.auth.login')->name('login');
         Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
         Route::view('/forget-password', 'back.pages.auth.forget-password')->name('forget-password');
+
         Route::group([
             'controller' => ForgotPasswordController::class,
         ],function () {
@@ -29,5 +30,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin', 'prevent-back-history'])->group(function (){
         Route::view('/home', 'back.pages.home')->name('home');
         Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+        Route::group([
+            'controller' => AdminController::class,
+            'prefix' => 'profile'
+        ], function(){
+            Route::get('/',  'viewProfile')->name('profile');
+            Route::post('/update',  'update')->name('profile.update');
+            Route::post('/change-profile-picture', 'changeProfilePicture')->name('change-profile-picture');
+
+        });
+
+
+
     });
 });

@@ -3,6 +3,8 @@
 /** SEND EMAIL FUNCTION USING PHPMAILER LIBRARY */
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Illuminate\Support\Facades\Route;
+
 
 if (!function_exists('sendEmail')) {
     function sendEmail($mailConfig) {
@@ -55,5 +57,12 @@ if (!function_exists('sendEmail')) {
             error_log('Exception caught: ' . $e->getMessage());
             return false;
         }
+    }
+}
+
+if (!function_exists('activeSideBar')) {
+    function activeSideBar($routeName): string
+    {
+        return Route::currentRouteName() == $routeName ? 'active' : '';
     }
 }

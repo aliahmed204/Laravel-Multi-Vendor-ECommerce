@@ -10,6 +10,7 @@ class Admin extends User
 {
     use HasFactory, Notifiable;
     protected $guard = 'admin';
+    const IMAGE_PATH = 'images/users/admins/';
     protected $fillable = [
         'first_name',
         'last_name',
@@ -28,5 +29,14 @@ class Admin extends User
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getImageAttribute($value)
+    {
+        if ($value){
+            return asset('images/users/admins/'.$value);
+        }else{
+            return asset('images/users/admins/admin1.jpg');
+        }
     }
 }
