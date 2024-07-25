@@ -1,11 +1,11 @@
 <?php
 
-/** SEND EMAIL FUNCTION USING PHPMAILER LIBRARY */
+use App\Models\GeneralSetting;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Route;
 
-
+/** SEND EMAIL FUNCTION USING PHPMAILER LIBRARY */
 if (!function_exists('sendEmail')) {
     function sendEmail($mailConfig) {
         // Load PHPMailer classes
@@ -66,3 +66,33 @@ if (!function_exists('activeSideBar')) {
         return Route::currentRouteName() == $routeName ? 'active' : '';
     }
 }
+
+/** GET GENERAL SETTINGS */
+if( !function_exists('get_settings') ){
+    function get_settings(){
+        $results = null;
+        $settings = new GeneralSetting();
+        $settings_data = $settings->first();
+
+        if( $settings_data ){
+            $results = $settings_data;
+        }else{
+            $settings->insert([
+                'site_name'=>'LaraveE-com',
+                'site_email'=>'info@appName.test'
+            ]);
+            $new_settings_data = $settings->first();
+            $results = $new_settings_data;
+        }
+        return $results;
+    }
+}
+
+if (!function_exists('getSettingMedia')) {
+    function getSettingMedia($key)
+    {
+        $setting = GeneralSetting::firstWhere('key', $key);
+        return $setting ? $setting->getFirstMediaUrl($key) : null;
+    }
+}
+

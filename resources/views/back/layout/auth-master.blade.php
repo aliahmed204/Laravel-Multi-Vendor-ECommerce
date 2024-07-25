@@ -9,19 +9,19 @@
     <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="{{asset('back')}}/vendors/images/apple-touch-icon.png"
+        href="{{getSettingMedia('site_favicon')}}"
     />
     <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="{{asset('back')}}/vendors/images/favicon-32x32.png"
+        href="{{getSettingMedia('site_favicon')}}"
     />
     <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="{{asset('back')}}/vendors/images/favicon-16x16.png"
+        href="{{getSettingMedia('site_favicon')}}"
     />
 
     <!-- Mobile Specific Metas -->
@@ -53,7 +53,7 @@
     >
         <div class="brand-logo">
             <a href="login.html">
-                <img src="{{asset('back')}}/vendors/images/deskapp-logo.svg" alt="" />
+                <img src="{{ asset('/images/site/'.\App\Models\GeneralSetting::getValue('site_logo'))}}" alt="" />
             </a>
         </div>
         <div class="login-menu">

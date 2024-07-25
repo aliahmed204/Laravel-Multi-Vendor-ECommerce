@@ -38,8 +38,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/',  'viewProfile')->name('profile');
             Route::post('/update',  'update')->name('profile.update');
             Route::post('/change-profile-picture', 'changeProfilePicture')->name('change-profile-picture');
+            Route::post('/change-logo', 'changeLogo')->name('change-logo');
+            Route::post('/change-favicon', 'changeFavicon')->name('change-favicon');
 
         });
+
+        Route::view('/settings', 'back.pages.settings')->name('settings');
 
 
 

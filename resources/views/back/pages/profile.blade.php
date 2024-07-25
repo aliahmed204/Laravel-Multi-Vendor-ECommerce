@@ -1,28 +1,15 @@
 @extends('back.layout.pages-master')
 
-@section('title', isset($pageTitle) ?? 'Examples Auth')
+@section('title', isset($pageTitle) ?: 'Profile')
+
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ isset($pageTitle) ?: 'Profile' }}
+    </li>
+@endsection
 
 @section('content')
-
-<div class="page-header">
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <div class="title">
-                <h4>Profile</h4>
-            </div>
-            <nav aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.home') }}">Home</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        {{__('Profile')}}
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
 
 <div class="row">
     {{--image --}}
@@ -32,7 +19,8 @@
                 <a href="javascript:;"
                    onclick="event.preventDefault();document.getElementById('adminProfilePictureFile').click();"
                    class="edit-avatar"><i class="fa fa-pencil"></i></a>
-                <img src="{{ $admin->image }}" alt="asd" class="avatar-photo" id="adminProfilePicture">
+                <?php /** @var \App\Models\Admin $admin */ ?>
+                <img src="{{ $admin->getFirstMediaUrl('avatars') }}" alt="asd" class="avatar-photo" id="adminProfilePicture">
                 <input type="file" name="adminProfilePictureFile" id="adminProfilePictureFile" class="d-none" style="opacity:0">
             </div>
             <h5 class="text-center h5 mb-0" id="adminProfileName">{{ $admin->first_name }}</h5>
@@ -69,12 +57,11 @@
           withCSRF:['_token','{{ csrf_token() }}'],
           onSuccess:function(message, element, status){
               Livewire.dispatch('updateAdminSellerHeaderInfo');
+              alert(message)
              //toastr.success(message);
           },
           onError:function(message, element, status){
-              console.log(message)
-              console.log(element)
-              console.log(status)
+              alert(message)
             //toastr.error(message);
           }
        });

@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Admin extends User
+class Admin extends User implements HasMedia
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, InteractsWithMedia;
     protected $guard = 'admin';
     const IMAGE_PATH = 'images/users/admins/';
     protected $fillable = [
@@ -39,4 +41,13 @@ class Admin extends User
             return asset('images/users/admins/admin1.jpg');
         }
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('avatars')
+            ->useFallbackUrl(asset('images/users/admins/admin1.jpg'))
+            ->singleFile();
+    }
+
 }

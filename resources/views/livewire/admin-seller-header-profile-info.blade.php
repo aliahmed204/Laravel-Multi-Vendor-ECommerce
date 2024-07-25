@@ -11,7 +11,7 @@
                     data-toggle="dropdown"
                 >
 							<span class="user-icon">
-								<img src="{{$admin->image}}" alt="" />
+								<img src="{{$admin->getFirstMediaUrl('avatars')}}" alt="" />
 							</span>
                     <span class="user-name">{{$admin->username}}</span>
                 </a>

@@ -7,21 +7,10 @@
 
     <!-- Site favicon -->
     <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="{{asset('back')}}/vendors/images/apple-touch-icon.png"
-    />
-    <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="{{asset('back')}}/vendors/images/favicon-32x32.png"
-    />
-    <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="{{asset('back')}}/vendors/images/favicon-16x16.png"
+        href="{{getSettingMedia('site_favicon')}}"
     />
 
     <!-- Mobile Specific Metas -->
@@ -43,6 +32,7 @@
         href="{{asset('back')}}/vendors/styles/icon-font.min.css"
     />
     <link rel="stylesheet" type="text/css" href="{{asset('back')}}/vendors/styles/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <link rel="stylesheet" href="{{asset('/')}}extra-assets/ijabo/ijabo.min.css">
     <link rel="stylesheet" href="{{asset('/')}}extra-assets/ijaboCropTool/ijaboCropTool.min.css">
@@ -413,8 +403,8 @@
 
 <div class="left-side-bar">
     <div class="brand-logo">
-        <a href="index.html">
-            <img src="{{asset('back')}}/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+        <a href="{{route('admin.home')}}">
+            <img src="{{ getSettingMedia('site_logo')  }}" alt="" class="dark-logo" />
             <img
                 src="{{asset('back')}}/vendors/images/deskapp-logo-white.svg"
                 alt=""
@@ -442,12 +432,12 @@
                         </div>
                         <nav aria-label="breadcrumb" role="navigation">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    blank
-                                </li>
+                                @section('breadcrumb')
+                                    <li class="breadcrumb-item">
+                                        <a href="{{'admin.home'}}">Home</a>
+                                    </li>
+                                @show
+
                             </ol>
                         </nav>
                     </div>
@@ -488,6 +478,7 @@
 <script src="{{asset('back/vendors/scripts/script.min.js')}}"></script>
 <script src="{{asset('back/vendors/scripts/process.js')}}"></script>
 <script src="{{asset('back/vendors/scripts/layout-settings.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     // prevent back history from firefox
     if( navigator.userAgent.indexOf("Firefox") !== -1 ){

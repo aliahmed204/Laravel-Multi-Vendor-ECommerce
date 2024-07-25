@@ -75,6 +75,14 @@
                     <span class="mtext">{{__('Profile')}}</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{route('admin.settings')}}"
+                    class="dropdown-toggle no-arrow {{ activeSideBar('admin.settings') }}">
+                    <span class="micon icon-copy fi-widget"></span>
+                    <span class="mtext">{{__('Settings')}}</span>
+                </a>
+            </li>
         @endif
     </ul>
 </div>
