@@ -10,8 +10,8 @@ use Livewire\WithPagination;
 class AdminCategories extends Component
 {
     use WithPagination;
-    public $catPerPage = 2;
-    public $subCatsPerPage = 2;
+    public $catPerPage = 6;
+    public $subCatsPerPage = 10;
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
