@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/example-pages', 'example-page');
@@ -45,6 +46,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::view('/settings', 'back.pages.settings')->name('settings');
 
+        Route::group([
+            'prefix' => 'categories',
+            'controller' => CategoryController::class,
+            'as'     => 'categories.'
+        ], function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('/{category}/edit/{?sub}', 'edit')->name('edit')->whereNumber('category');
+            Route::get('/create/{?sub}', 'create')->name('create');
+            Route::post('/{?sub}', 'store')->name('store');
+            Route::put('/{id}/{?sub}', 'update')->name('update');
+        });
 
 
     });

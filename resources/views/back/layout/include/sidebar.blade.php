@@ -7,6 +7,13 @@
                     <span class="mtext">Home</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.categories.index') }}"
+                   class="dropdown-toggle no-arrow {{ activeSideBar('admin.categories.index') }}">
+                    <span class="micon dw dw-align-left3"></span>
+                    <span class="mtext">{{__('Manage Categories')}}</span>
+                </a>
+            </li>
             <li class="dropdown">
                 <a href="javascript:;" class="dropdown-toggle"><span class="micon bi bi-archive"></span>
                     <span class="mtext"> UI Elements </span>

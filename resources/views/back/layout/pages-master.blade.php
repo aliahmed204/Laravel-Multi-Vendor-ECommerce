@@ -479,6 +479,9 @@
 <script src="{{asset('back/vendors/scripts/process.js')}}"></script>
 <script src="{{asset('back/vendors/scripts/layout-settings.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+{{--this for Swal--}}
+@vite('resources/js/app.js')
+
 <script>
     // prevent back history from firefox
     if( navigator.userAgent.indexOf("Firefox") !== -1 ){
