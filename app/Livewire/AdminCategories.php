@@ -33,6 +33,12 @@ class AdminCategories extends Component
         /**@var Category $cat*/
 
         $cat = Category::firstWhere('id', $cat_id);
+
+        if ($cat->subCategories()->count() > 0){
+            $this->showToastr('error','This category has ('.$cat->subCategories()->count().')sub-categories. You can not delete it unless you free its sub-categories.');
+            return;
+        }
+
         $cat->getFirstMedia('image')->delete();
         $deleted = $cat->delete();
 
