@@ -4,10 +4,15 @@ namespace App\Livewire;
 
 use App\Models\Category;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 /** @var Category $categories */
 class AdminCategories extends Component
 {
-    public $subcategories  = [];
+    use WithPagination;
+    public $catPerPage = 2;
+    public $subCatsPerPage = 2;
+    protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
         'updateCategoriesOrdering',
@@ -103,8 +108,8 @@ class AdminCategories extends Component
     public function render()
     {
         return view('livewire.admin-categories',[
-            'categories' => Category::isParent()->ordered()->get(),
-            'subCategories' => Category::isSubCat()->ordered()->get()
+            'categories' => Category::isParent()->ordered()->paginate($this->catPerPage),
+            'subCategories' => Category::isSubCat()->ordered()->paginate($this->subCatsPerPage, ['*'], 'subcatspage'),
         ]);
     }
     public function showToastr($type,$message){

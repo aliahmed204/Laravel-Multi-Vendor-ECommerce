@@ -61,7 +61,7 @@
                     </table>
                 </div>
                 <div class="d-block mt-2">
-{{--                    {{ $categories->links('livewire::simple-bootstrap') }}--}}
+                    {{$categories->links()}}
                 </div>
             </div>
         </div>
@@ -142,7 +142,8 @@
                     </table>
                 </div>
                 <div class="d-block mt-2">
-{{--                    {{ $subcategories->links('livewire::simple-bootstrap') }}--}}
+{{--                    {{ $subCategories->links('livewire::simple-bootstrap') }}--}}
+                    {{ $subCategories->links() }}
                 </div>
             </div>
         </div>
