@@ -45,25 +45,27 @@
                     data-toggle="dropdown"
                 >
 							<span class="user-icon">
-								<img src="{{asset('back')}}/vendors/images/photo1.jpg" alt="" />
+								<img src="{{$seller->getFirstMediaUrl('avatars')}}" alt="" />
 							</span>
-                    <span class="user-name">Ross C. Lopez</span>
+                    <span class="user-name">{{$seller->username}}</span>
                 </a>
-                <div
-                    class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-                >
-                    <a class="dropdown-item" href="profile.html"
-                    ><i class="dw dw-user1"></i> Profile</a
-                    >
-                    <a class="dropdown-item" href="profile.html"
-                    ><i class="dw dw-settings2"></i> Setting</a
-                    >
-                    <a class="dropdown-item" href="faq.html"
-                    ><i class="dw dw-help"></i> Help</a
-                    >
-                    <a class="dropdown-item" href="{{route('admin.logout')}}"
-                    ><i class="dw dw-logout"></i> Log Out</a
-                    >
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                    <a class="dropdown-item" href="{{--{{route('seller.profile')}}--}}">
+                        <i class="dw dw-user1"></i>
+                        Profile
+                    </a>
+                    <a class="dropdown-item" href="profile.html">
+                        <i class="dw dw-settings2"></i>
+                        Setting
+                    </a>
+
+                    <a class="dropdown-item"
+                       href="{{route('seller.logout')}}"
+                       onclick="event.preventDefault(); document.getElementById('adminLogoutForm').submit();"
+                    ><i class="dw dw-logout"></i> Log Out</a>
+                    <form method="post" action="{{route('seller.logout')}}" id="adminLogoutForm">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

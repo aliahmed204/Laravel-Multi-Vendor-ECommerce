@@ -25,7 +25,7 @@ class LoginController extends Controller
             [
                 'login_id.required' => 'The Email\Username Or Phone field is required.',
                 'login_id.exists' => 'Username Is not exists in system.',
-                'password.exists' => 'Password is required.'
+                'password.required' => 'Password is required.'
             ]);
 
         $credentials = [

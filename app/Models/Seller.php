@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Seller extends User
+class Seller extends User implements HasMedia
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, InteractsWithMedia;
+
     protected $guard = 'seller';
     protected $fillable = [
         'first_name',
@@ -25,7 +28,10 @@ class Seller extends User
         'status',
         'payment_method',
         'payment_email',
+        'verified',
+        'completed',
     ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -36,5 +42,29 @@ class Seller extends User
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isVerified()
+    {
+        return $this->verified;
+    }
+
+    public function verify()
+    {
+        $this->verified = 1;
+        $this->email_verified_at = now();
+        $this->save();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('avatars')
+            ->useFallbackUrl(asset('images/users/sellers/sellers.jpg'))
+            ->singleFile();
+    }
+
+    public function verifyToken(){
+        return $this->morphOne(VerificationToken::class , 'verify');
     }
 }

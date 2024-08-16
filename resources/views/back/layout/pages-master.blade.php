@@ -221,7 +221,9 @@
             </div>
         </div>
 
-        <livewire:admin-seller-header-profile-info />
+        @if(Route::is('admin.*') || Route::is('seller.*'))
+            <livewire:admin-seller-header-profile-info />
+        @endif
 
         <div class="github-link">
             <a href="https://github.com/dropways/deskapp" target="_blank"
