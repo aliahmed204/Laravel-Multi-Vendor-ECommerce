@@ -83,25 +83,25 @@
                 <div class="p-sticky">
                     <div class="category-menu">
                         <h3>Category</h3>
-                        {{--@if ( count(get_categories()) > 0 )
+                        @if ( count($categories) > 0 )
 
 
                         <ul>
-                            @foreach (get_categories() as $category)
+                            @foreach ($categories as $category)
 
 
                             <li>
                                 <div class="category-list">
-                                    <img src="/images/categories/{{ $category->category_image }}" class="blur-up lazyload" alt>
+                                    <img src="{{ $category->getFirstMediaUrl('image') }}" class="blur-up lazyload" alt="cat-image">
                                     <h5>
-                                        <a href="javascript:void(0)">{{ $category->category_name }}</a>
+                                        <a href="javascript:void(0)">{{ $category->name }}</a>
                                     </h5>
                                 </div>
                             </li>
                             @endforeach
                         </ul>
 
-                        @endif--}}
+                        @endif
 
                     </div>
 
@@ -1190,39 +1190,25 @@
                         venenatis varius</p>
                 </div>
 
-                {{--@if ( count(get_categories()) > 0 )
 
 
                 <div class="category-slider-2 product-wrapper no-arrow">
-                    @foreach (get_categories() as $category)
-
-
+                    {{--<div class="slider-3-blog ratio_65 no-arrow product-wrapper mb-4">--}}
+                    @forelse($categories as $category)
                     <div>
                         <a href="javascript:void(0)" class="category-box">
                             <div>
-                                <img src="/images/categories/{{ $category->category_image }}" class="blur-up lazyload" alt>
-                                <h5>{{ $category->category_name }}</h5>
+                                <img src="{{ $category->getFirstMediaUrl('image') }}" class="blur-up lazyload" alt="cat-image">
+                                <h5>{{ $category->name }}</h5>
                             </div>
                         </a>
                     </div>
-
-                    @endforeach
+                    @empty
+                        Coming soon
+                    @endforelse
                 </div>
 
-                @endif--}}
-                <div class="category-slider-2 product-wrapper no-arrow">
 
-
-                        <div>
-                            <a href="javascript:void(0)" class="category-box">
-                                <div>
-                                    <img src="/images/categories/{{'category_image' }}" class="blur-up lazyload" alt>
-                                    <h5>{{ 'category_name' }}</h5>
-                                </div>
-                            </a>
-                        </div>
-
-                </div>
 
                 <div class="title d-block">
                     <h2>Our Best Seller</h2>

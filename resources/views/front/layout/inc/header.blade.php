@@ -277,36 +277,33 @@
                                 </button>
                             </div>
 
-                            {{--@if ( count(get_categories()) > 0 )
+                            @if ( count($categories) > 0 )
 
-                           @foreach (get_categories() as $category)
-
-
+                           @foreach ($categories as $category)
                             <ul class="category-list">
                                 <li class="onhover-category-list">
                                     <a href="javascript:void(0)" class="category-name">
-                                        <img src="/images/categories/{{ $category->category_image }}" alt>
-                                        <h6>{{ $category->category_name }}</h6>
+                                        <img src="{{ $category->getFirstMediaUrl('image') }}" alt="cat-image">
+                                        <h6>{{ $category->name }}</h6>
 
-                                        @if ( count($category->subcategories) > 0 )
+                                        @if ( count($category->subCategories) > 0 )
                                           <i class="fa fa-angle-right"></i>
                                         @endif
 
                                     </a>
 
-                                    @if ( count($category->subcategories) > 0 )
+                                    @if ( count($category->subCategories) > 0 )
 
 
                                     <div class="onhover-category-box">
-                                        @foreach ($category->subcategories as $subcategory)
-
+                                        @foreach ($category->subCategories as $subcategory)
+                                        {{--just subCategory it also parent of child--}}
                                         @if ( $subcategory->is_child_of == 0 )
-
 
                                         <div class="list">
                                             <div class="category-title-box">
                                                 <a href="javascript:void(0)">
-                                                    <h5>{{ $subcategory->subcategory_name }}</h5>
+                                                    <h5>{{ $subcategory->name }}</h5>
                                                 </a>
 
                                             </div>
@@ -316,9 +313,8 @@
                                             <ul>
                                                 @foreach ($subcategory->children as $child_subcategory)
 
-
                                                 <li>
-                                                    <a href="javascript:void(0)">{{ $child_subcategory->subcategory_name }}</a>
+                                                    <a href="javascript:void(0)">{{ $child_subcategory->name }}</a>
                                                 </li>
 
                                                 @endforeach
@@ -335,7 +331,7 @@
                             </ul>
                             @endforeach
 
-                                  @endif--}}
+                                  @endif
                         </div>
                     </div>
 
@@ -358,85 +354,24 @@
                                                 href="javascript:void(0)" data-bs-toggle="dropdown">Shop</a>
 
                                             <div class="dropdown-menu dropdown-menu-2 row g-3">
-                                                <div class="dropdown-column col-xl-4">
-                                                    <h5 class="dropdown-header"><a
-                                                            href="javascript:void(0)">Clothing</a></h5>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Vehicula,
-                                                        Enim & Donec</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Tristique
-                                                        &
-                                                        Pulvinar</a>
-
-                                                    <a href="javascript:void(0)" class="dropdown-item">Lorem
-                                                        Ipsum
-                                                        Dolo</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Ridiculus
-                                                        Scelerisque</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Primis
-                                                        Sapien</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Habitant
-                                                        Dignissim</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Nunc
-                                                        in
-                                                        Aliquam</a>
-                                                </div>
-
-                                                <div class="dropdown-column col-xl-4">
-                                                    <h5 class="dropdown-header"><a href="javascript:void(0)">Home
-                                                            &
-                                                            Garden
-                                                        </a></h5>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Quisque
-                                                        &
-                                                        Porta</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Fusce
-                                                        Natoque</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Vehicula
-                                                        Enim</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Rutrum
-                                                        Neque</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Nascetur
-                                                        Suspendisse</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Pharetra
-                                                        Nascetur</a>
-
-                                                    <a href="javascript:void(0)" class="dropdown-item">Egestas
-                                                        Bibendum</a>
-                                                </div>
-
-                                                <div class="dropdown-column col-xl-4">
-                                                    <h5 class="dropdown-header"><a
-                                                            href="javascript:void(0)">Beauty</a></h5>
-                                                    <a class="dropdown-item" href="javascript:void(0)">Feugiat
-                                                        Donec</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Blandit
-                                                        Malesuada</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Convallis
-                                                        Tristique</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Himenaeos
-                                                        Cursus</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Accumsan
-                                                        Dignissim</a>
-
-                                                    <a class="dropdown-item" href="javascript:void(0)">Pharetra
-                                                        Nascetur</a>
-                                                </div>
-
+                                                @if ( count($categories) > 0 )
+                                                    @foreach ($categories->shuffle()->take(3) as $category)
+                                                        <div class="dropdown-column col-xl-4 col-md-6">
+                                                            <h5 class="dropdown-header">
+                                                                <a href="javascript:void(0)">{{ $category->name }}</a>
+                                                            </h5>
+                                                            @if($category->subCategories->count() > 0)
+                                                                @foreach ($category->subCategories->shuffle()->take(4) as $subCategory)
+                                                                    <a class="dropdown-item" href="javascript:void(0)">
+                                                                        {{ $subCategory->name }}
+                                                                    </a>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
+
                                         </li>
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="javascript:void(0)"
