@@ -45,12 +45,12 @@
                     data-toggle="dropdown"
                 >
 							<span class="user-icon">
-								<img src="{{$seller->getFirstMediaUrl('avatars')}}" alt="" />
+								<img src="{{$seller ->getFirstMediaUrl('avatars')}}" alt="avatar" />
 							</span>
                     <span class="user-name">{{$seller->username}}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="{{--{{route('seller.profile')}}--}}">
+                    <a class="dropdown-item" href="{{route('seller.profile')}}">
                         <i class="dw dw-user1"></i>
                         Profile
                     </a>

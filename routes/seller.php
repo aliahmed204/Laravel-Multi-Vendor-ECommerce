@@ -37,10 +37,21 @@ Route::group([
         });
     });
 
-    Route::middleware(['auth:seller', 'verified', 'prevent-back-history'])->group(function (){
+    Route::middleware(['auth:seller', 'verified', /*'completed',*/ 'prevent-back-history'])->group(function (){
         Route::get('/',[SellerController::class, 'home'])->name('home');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+        Route::group([
+            'controller' => SellerController::class,
+            'prefix' => 'profile'
+        ], function(){
+            Route::get('/',  'viewProfile')->name('profile');
+            Route::post('/update',  'update')->name('profile.update');
+            Route::post('/change-profile-picture', 'changeProfilePicture')->name('change-profile-picture');
+            Route::post('/change-logo', 'changeLogo')->name('change-logo');
+            Route::post('/change-favicon', 'changeFavicon')->name('change-favicon');
+
+        });
 
     });
 
