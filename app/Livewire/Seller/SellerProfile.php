@@ -2,6 +2,10 @@
 
 namespace App\Livewire\Seller;
 
+use App\Mail\Seller\SellerPasswordResetMail;
+use App\Mail\Seller\SellerPasswordResetSuccessfullyMail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class SellerProfile extends Component
@@ -13,6 +17,9 @@ class SellerProfile extends Component
 
     protected $queryString = ['tab' => ['keep' => true] ];
 
+    protected $listeners = [
+        'updateSellerProfilePage' => '$refresh'
+    ];
     public function selectTab($tab)
     {
         $this->tab = $tab;
@@ -40,6 +47,60 @@ class SellerProfile extends Component
             'phone'      =>'required|min:10|unique:sellers,phone,'.auth('seller')->id(),
             'address'    =>'required|min:5',
         ]);
+        $seller = auth('seller')->user();
+        $seller->first_name = $this->first_name;
+        $seller->last_name = $this->last_name;
+        $seller->username = $this->username;
+        $seller->address = $this->address;
+        $seller->phone = $this->phone;
+        $update = $seller->save();
+
+        if( $update ){
+            $this->dispatch('updateAdminSellerHeaderInfo');
+            $this->showToastr('success','Personal Details have been successfully updated.');
+        }else{
+            $this->showToastr('error','Something went wrong.');
+        }
+    }
+
+    public function updatePassword(){
+        $seller = auth('seller')->user();
+
+        //Validate the form
+        $this->validate([
+            'current_password'=>[
+                'required',
+                function($attribute, $value, $fail) use ($seller){
+                    if( !Hash::check($value, $seller->password) ){
+                        return $fail(__('The current password is incorrect.'));
+                    }
+                }
+            ],
+            'new_password'=>'required|min:5|max:45|confirmed'
+        ]);
+
+        //Update password
+        $update = $seller->update([
+            'password'=> Hash::make($this->new_password)
+        ]);
+
+        if( $update ){
+            //Send email notification to seller that contains new password
+            $data = [
+                'seller' => $seller,
+                'password' => $this->new_password,
+            ];
+
+            Mail::to($seller)->send(new SellerPasswordResetSuccessfullyMail($data));
+
+            $this->current_password = null;
+            $this->new_password = null;
+            $this->new_password_confirmation = null;
+
+            $this->showToastr('success','Password successfully updated.');
+        }else{
+            $this->showToastr('error','Something went wrong.');
+        }
     }
 
     public function render()

@@ -22,23 +22,28 @@
         });
 
         /* crop and save image */
-        $('input[type="file"][name="sellerProfilePictureFile"][id="sellerProfilePictureFile"]').ijaboCropTool({
+        $('input[type="file"][id="sellerProfilePictureFile"]').Kropify({
           preview : '#sellerProfilePicture',
-          setRatio:1,
-          allowedExtensions: ['jpg', 'jpeg','png'],
-          buttonsText:['CROP', 'QUIT'],
-          buttonsColor:['#30bf7d','#ee5155', -15],
-          processUrl:'{{ route("admin.change-profile-picture") }}',
-          withCSRF:['_token','{{ csrf_token() }}'],
-          onSuccess:function(message, element, status){
-              Livewire.dispatch('updateAdminSellerHeaderInfo');
-              alert(message)
-             //toastr.success(message);
-          },
-          onError:function(message, element, status){
-              alert(message)
-            //toastr.error(message);
-          }
+            viewMode:1,
+            aspectRatio:1,
+            cancelButtonText:'Cancel',
+            resetButtonText:'Reset',
+            cropButtonText:'Crop & update',
+            processURL:'{{ route("seller.change-profile-picture") }}',
+            maxSize:2097152,
+            showLoader:true,
+            success:function(data){
+                if( data.status == 1 ){
+                    toastr.success(data.msg);
+                     Livewire.dispatch('updateAdminSellerHeaderInfo');
+                     Livewire.dispatch('updateSellerProfilePage');
+                }else{
+                    toastr.error(data.msg);
+                }
+            },
+            errors:function(error, text){
+                console.log(text);
+            },
        });
     </script>
 @endpush

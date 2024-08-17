@@ -4,6 +4,7 @@
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
     <title>@yield('pageTitle')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Site favicon -->
     <link
@@ -45,7 +46,7 @@
             font-size: 0.78em;
         }
     </style>
-
+    @kropifyStyles
     @livewireStyles
     @stack('styleSheets')
 </head>
@@ -496,6 +497,7 @@
 <script src="{{asset('/extra-assets/ijaboCropTool/ijaboCropTool.min.js')}}"></script>
 <script src="{{asset('/extra-assets/jquery-ui-1.13.2/jquery-ui.min.js')}}"></script>
 <script src="{{asset('/extra-assets/summernote/summernote-bs4.min.js')}}"></script>
+@kropifyScripts
 <script>
     $(document).ready(function(){
         $('.summernote').summernote({
