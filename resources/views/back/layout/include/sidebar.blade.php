@@ -95,7 +95,7 @@
         {{--seller routes--}}
         @if(Route::is('seller.*'))
                 <li>
-                    <a href="{{route('admin.home')}}" class="dropdown-toggle no-arrow">
+                    <a href="{{route('seller.home')}}" class="dropdown-toggle no-arrow">
                         <span class="micon bi bi-calendar4-week"></span>
                         <span class="mtext">Home</span>
                     </a>
@@ -144,18 +144,7 @@
                         <li><a href="custom-icon.html">Custom Icons</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="sitemap.html" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-diagram-3"></span
-                                ><span class="mtext">Sitemap</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="chat.html" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-chat-right-dots"></span
-                                ><span class="mtext">Chat</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="invoice.html" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-receipt-cutoff"></span
@@ -169,18 +158,18 @@
                     <div class="sidebar-small-cap">Settings</div>
                 </li>
                 <li>
-                    <a href="{{route('admin.profile')}}"
-                       class="dropdown-toggle no-arrow {{ activeSideBar('admin.profile') }}">
+                    <a href="{{route('seller.profile')}}"
+                       class="dropdown-toggle no-arrow {{ activeSideBar('seller.profile') }}">
                         <span class="micon fa fa-user"></span>
                         <span class="mtext">{{__('Profile')}}</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{route('admin.settings')}}"
-                       class="dropdown-toggle no-arrow {{ activeSideBar('admin.settings') }}">
-                        <span class="micon icon-copy fi-widget"></span>
-                        <span class="mtext">{{__('Settings')}}</span>
+                    <a href="{{route('seller.shop.index')}}"
+                       class="dropdown-toggle no-arrow {{ activeSideBar('seller.shop.index') }}">
+                        <span class="micon bi bi-shop"></span>
+                        <span class="mtext">{{__('Shop Settings')}}</span>
                     </a>
                 </li>
             @endif

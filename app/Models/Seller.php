@@ -67,4 +67,9 @@ class Seller extends User implements HasMedia
     public function verifyToken(){
         return $this->morphOne(VerificationToken::class , 'verify');
     }
+
+    public function shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
 }

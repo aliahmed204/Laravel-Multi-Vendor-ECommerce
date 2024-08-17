@@ -17,7 +17,7 @@ class SellerController extends Controller
             'pageTitle' => 'Seller Home'
         ];
 
-        return view('back.pages.seller.home');
+        return view('back.pages.seller.home', $data);
     }
     public function viewProfile()
     {

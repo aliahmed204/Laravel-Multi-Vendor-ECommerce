@@ -4,6 +4,7 @@ use App\Http\Controllers\Seller\AccountController;
 use App\Http\Controllers\Seller\Auth\AuthController;
 use App\Http\Controllers\Seller\Auth\ForgetPasswordController;
 use App\Http\Controllers\Seller\SellerController;
+use App\Http\Controllers\Seller\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -46,11 +47,18 @@ Route::group([
             'prefix' => 'profile'
         ], function(){
             Route::get('/',  'viewProfile')->name('profile');
-            Route::post('/update',  'update')->name('profile.update');
             Route::post('/change-profile-picture', 'changeProfilePicture')->name('change-profile-picture');
-            Route::post('/change-logo', 'changeLogo')->name('change-logo');
-            Route::post('/change-favicon', 'changeFavicon')->name('change-favicon');
+        });
 
+        // shop
+
+        Route::group([
+            'controller' => ShopController::class,
+            'prefix' => 'shop',
+            'as'     => 'shop.'
+        ], function(){
+            Route::get('/index',  'index')->name('index');
+            Route::put('/update', 'update')->name('update');
         });
 
     });
