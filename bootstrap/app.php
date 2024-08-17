@@ -32,7 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
            'guest'=> \App\Http\Middleware\RedirectIfAuthenticated::class,
            'auth' => \App\Http\Middleware\Authenticate::class,
-           'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class
+           'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
+           'verified'  => \App\Http\Middleware\VerifiedSeller::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
